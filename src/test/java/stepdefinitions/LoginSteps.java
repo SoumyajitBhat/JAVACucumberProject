@@ -12,7 +12,7 @@ public class LoginSteps {
     public void user_is_on_login_page() {
         System.out.println("User is on login page");
         System.out.println(driver.getTitle());
-        Assert.assertEquals("YouTube1", driver.getTitle());
+        Assert.assertEquals("YouTube", driver.getTitle());
     }
 
     @When("user enters valid username and password")
