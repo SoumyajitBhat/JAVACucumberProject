@@ -1,10 +1,10 @@
 name: Scheduled BDD Tests
 
 on:
+  workflow_dispatch: # Allow manual runs for testing
   schedule:
     # Run daily at 2 AM UTC (adjust timezone as needed)
     - cron: '0 2 * * *'
-  workflow_dispatch: # Allow manual runs for testing
 
 jobs:
   test:
