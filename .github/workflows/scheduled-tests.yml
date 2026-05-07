@@ -1,0 +1,50 @@
+name: Scheduled BDD Tests
+
+on:
+  schedule:
+    # Run daily at 2 AM UTC (adjust timezone as needed)
+    - cron: '0 2 * * *'
+  workflow_dispatch: # Allow manual runs for testing
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+
+    - name: Run tests
+      run: mvn clean test
+
+    - name: Upload test artifacts
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: test-results
+        path: |
+          target/screenshots/
+          target/cucumber-report.html
+          target/cucumber-report.xml
+          target/cucumber-report.json
+        retention-days: 7
+
+    - name: Upload results to AIOTest TCMS
+      if: always()
+      run: |
+        curl -X POST "${{ secrets.AIO_TCMS_API_URL }}" \
+          -H "accept: application/json;charset=utf-8" \
+          -H "Authorization: AioAuth ${{ secrets.AIO_TCMS_AUTH_TOKEN }}" \
+          -H "Content-Type: multipart/form-data" \
+          -F "createNewRun=true" \
+          -F "updateOnlyRunStatus=true" \
+          -F "createCase=false" \
+          -F "addCaseToCycle=false" \
+          -F "file=@target/cucumber-report.json;type=application/json"

@@ -1,0 +1,11 @@
+-------------------------------------------------------------------------------
+Test set: runners.TestRunner
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 40.69 s <<< FAILURE! -- in runners.TestRunner
+Login.Successful login validation -- Time elapsed: 40.38 s <<< FAILURE!
+org.junit.ComparisonFailure: expected:<YouTube[1]> but was:<YouTube[]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at stepdefinitions.LoginSteps.user_is_on_login_page(LoginSteps.java:15)
+	at ✽.user is on login page(file:///Users/soumyajitbhattacharjee/project/cucumber-java-bdd-framework/src/test/resources/features/login.feature:5)
+
